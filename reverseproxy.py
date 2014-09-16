@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, make_response, request
 import urllib2
 import json
+
+jenkins_url = "http://space.sshchicago.org:49152"
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -12,7 +16,7 @@ def handle_webhook():
     hook_json = request.json
     print hook_json
 
-    req = urllib2.Request('http://space.sshchicago.org:49152/github-webhook')
+    req = urllib2.Request(jenkins_url + '/github-webhook/')
     req.add_header('Content-Type', 'application/json')
     jenkins_response = urllib2.urlopen(req, json.dumps(hook_json))
     print response
