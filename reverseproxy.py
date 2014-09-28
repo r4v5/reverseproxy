@@ -6,7 +6,7 @@ import json
 import pdb
 
 jenkins_url = "http://mlearn.sshchicago.org:8080"
-needs_crumb = False
+needs_crumb = True
 
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ def handle_webhook():
     data = [('payload', hook)]
     jenkins_response = requests.post(jenkins_url + "/github-webhook/", data=data )
     print jenkins_response.status_code
-    return jenkins_response.text
+    return make_response(jenkins_response.text, jenkins_response.status_code)
 
 @app.errorhandler(404)
 def not_found(error):
